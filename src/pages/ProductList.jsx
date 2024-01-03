@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
   TableRow,
   TableHeaderCell,
@@ -7,41 +8,43 @@ import {
   TableBody,
   MenuItem,
   Icon,
-  Label,
   Menu,
   Table,
 } from "semantic-ui-react";
+import ProductService from "../services/productService";
 
 export default function ProductList() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    let productService = new ProductService();
+    productService
+      .getProducts()
+      .then((result) => setProducts(result.data.data));
+  }, []);
+
   return (
     <div>
       <Table celled>
         <TableHeader>
           <TableRow>
-            <TableHeaderCell>Header</TableHeaderCell>
-            <TableHeaderCell>Header</TableHeaderCell>
-            <TableHeaderCell>Header</TableHeaderCell>
+            <TableHeaderCell>Ürün Adı</TableHeaderCell>
+            <TableHeaderCell>Birim Fiyatı</TableHeaderCell>
+            <TableHeaderCell>Stok Adedi</TableHeaderCell>
+            <TableHeaderCell>Açıklama</TableHeaderCell>
+            <TableHeaderCell>Kategori</TableHeaderCell>
           </TableRow>
         </TableHeader>
 
         <TableBody>
-          <TableRow>
-            <TableCell>
-              <Label ribbon>First</Label>
-            </TableCell>
-            <TableCell>Cell</TableCell>
-            <TableCell>Cell</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Cell</TableCell>
-            <TableCell>Cell</TableCell>
-            <TableCell>Cell</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Cell</TableCell>
-            <TableCell>Cell</TableCell>
-            <TableCell>Cell</TableCell>
-          </TableRow>
+          {products.map((product) => (
+            <Table.Row key={product.id}>
+              <Table.Cell> {product.title} </Table.Cell>
+              <Table.Cell>{product.price}</Table.Cell>
+              <Table.Cell>{product.description}</Table.Cell>
+              <Table.Cell>{product.category}</Table.Cell>
+            </Table.Row>
+          ))}
         </TableBody>
 
         <TableFooter>

@@ -1,13 +1,4 @@
-import {
-  DropdownMenu,
-  DropdownItem,
-  MenuMenu,
-  MenuItem,
-  Button,
-  Dropdown,
-  Menu,
-  Container,
-} from "semantic-ui-react";
+import { DropdownMenu, DropdownItem, Dropdown } from "semantic-ui-react";
 
 export default function CartSummary() {
   return (
